@@ -7,22 +7,6 @@ interface RequestWithBody extends Request {
   body: { [key: string]: string | undefined };
 }
 
-route.get("/login", (req: Request, res: Response): void => {
-  if (req.session && req.session.isLoggedIn) {
-    res.redirect("/");
-    return;
-  }
-  res.send(`
-  <form method="post">
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email" />
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" />
-    <button type="submit">Submit</button>
-</form>
-      `);
-});
-
 route.post("/login", (req: RequestWithBody, res: Response): void => {
   const { email, password } = req.body;
 
