@@ -7,6 +7,10 @@ interface RequestWithBody extends Request {
 }
 
 route.get("/login", (req: Request, res: Response): void => {
+  if (req.session && req.session.isLoggedIn) {
+    res.redirect("/");
+    return;
+  }
   res.send(`
   <form method="post">
     <label for="email">Email</label>
@@ -20,11 +24,40 @@ route.get("/login", (req: Request, res: Response): void => {
 
 route.post("/login", (req: RequestWithBody, res: Response): void => {
   const { email, password } = req.body;
+
   if (email && password && email === "test@test.com" && password === "test") {
     req.session = { isLoggedIn: true };
-    res.send(email + password);
+    res.redirect("/");
     return;
   }
   res.send("invalid email or password");
+});
+
+route.get("/", (req: Request, res: Response): void => {
+  if (req.session && req.session.isLoggedIn) {
+    res.send(`
+        <div>
+            <div>You are logged in</div>
+            <a href="/logout">Logout</a>
+        </div>
+`);
+    return;
+  }
+  res.send(`
+    <div>
+        <div>You are not logged in</div>
+        <a href="/login">Login</a>
+    </div>
+    
+    `);
+});
+
+route.get("/logout", (req: Request, res: Response): void => {
+  if (!req.session || (req.session && !req.session.isLoggedIn)) {
+    res.redirect("/");
+    return;
+  }
+  req.session = null;
+  res.redirect("/");
 });
 export default route;
