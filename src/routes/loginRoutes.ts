@@ -20,7 +20,8 @@ route.get("/login", (req: Request, res: Response): void => {
 
 route.post("/login", (req: RequestWithBody, res: Response): void => {
   const { email, password } = req.body;
-  if (email && password) {
+  if (email && password && email === "test@test.com" && password === "test") {
+    req.session = { isLoggedIn: true };
     res.send(email + password);
     return;
   }
