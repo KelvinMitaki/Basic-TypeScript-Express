@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import auth from "../middlewares/auth";
 
 const route = Router();
 
@@ -61,15 +62,7 @@ route.get("/logout", (req: Request, res: Response): void => {
   res.redirect("/");
 });
 
-route.get("/protected", (req: Request, res: Response): void => {
-  if (!req.session || (req.session && !req.session.isLoggedIn)) {
-    res.send(`
-    <div>
-        <div>Denied</div>
-    </div>
-    `);
-    return;
-  }
+route.get("/protected", auth, (req: Request, res: Response): void => {
   res.send(`
 <div>
     <div>Welcome to protected route logged in user</div>
