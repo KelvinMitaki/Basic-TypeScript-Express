@@ -60,4 +60,20 @@ route.get("/logout", (req: Request, res: Response): void => {
   req.session = null;
   res.redirect("/");
 });
+
+route.get("/protected", (req: Request, res: Response): void => {
+  if (!req.session || (req.session && !req.session.isLoggedIn)) {
+    res.send(`
+    <div>
+        <div>Denied</div>
+    </div>
+    `);
+    return;
+  }
+  res.send(`
+<div>
+    <div>Welcome to protected route logged in user</div>
+</div>
+`);
+});
 export default route;
