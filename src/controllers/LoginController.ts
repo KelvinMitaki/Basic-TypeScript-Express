@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
+import { get } from "./decorators/routes";
 
 export class LoginController {
+  @get("/login")
   getLogin(req: Request, res: Response): void {
     if (req.session && req.session.isLoggedIn) {
       res.redirect("/");
