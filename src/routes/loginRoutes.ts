@@ -2,6 +2,10 @@ import { Router, Request, Response } from "express";
 
 const route = Router();
 
+interface RequestWithBody extends Request {
+  body: { [key: string]: string | undefined };
+}
+
 route.get("/login", (req: Request, res: Response): void => {
   res.send(`
   <form method="post">
@@ -14,8 +18,12 @@ route.get("/login", (req: Request, res: Response): void => {
       `);
 });
 
-route.post("/login", (req: Request, res: Response): void => {
-  const { email, password }: { email: string; password: string } = req.body;
-  res.send(email + password);
+route.post("/login", (req: RequestWithBody, res: Response): void => {
+  const { email, password } = req.body;
+  if (email && password) {
+    res.send(email + password);
+    return;
+  }
+  res.send("invalid email or password");
 });
 export default route;
