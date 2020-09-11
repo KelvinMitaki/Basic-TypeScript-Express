@@ -12,12 +12,13 @@ const bodyValidators = (keys: string[]): RequestHandler => (
     res.status(422).send("no body");
     return;
   }
-  keys.forEach((key: string): void => {
+
+  for (let key in keys) {
     if (!req.body[key]) {
       res.status(422).send("invalid request");
       return;
     }
-  });
+  }
   next();
 };
 
