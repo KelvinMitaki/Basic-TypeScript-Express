@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { Methods } from "./Methods";
 
 const routeBinder = (method: string) => (path: string) => (
   target: any,
@@ -9,7 +10,8 @@ const routeBinder = (method: string) => (path: string) => (
   Reflect.defineMetadata("method", method, target, key);
 };
 
-export const get = routeBinder("get");
-export const put = routeBinder("put");
-export const patch = routeBinder("patch");
-export const del = routeBinder("delete");
+export const get = routeBinder(Methods.get);
+export const put = routeBinder(Methods.put);
+export const patch = routeBinder(Methods.patch);
+export const del = routeBinder(Methods.delete);
+export const post = routeBinder(Methods.post);
