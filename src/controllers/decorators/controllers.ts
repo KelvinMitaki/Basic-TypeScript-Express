@@ -13,8 +13,9 @@ const bodyValidators = (keys: string[]): RequestHandler => (
     return;
   }
 
-  for (let key in keys) {
+  for (let key of keys) {
     if (!req.body[key]) {
+      console.log("reached");
       res.status(422).send("invalid request");
       return;
     }
