@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import { Metadata } from "./Metadata";
 import { Methods } from "./Methods";
 
 const routeBinder = (method: string) => (path: string) => (
@@ -6,8 +7,8 @@ const routeBinder = (method: string) => (path: string) => (
   key: string,
   desc: PropertyDescriptor
 ) => {
-  Reflect.defineMetadata("path", path, target, key);
-  Reflect.defineMetadata("method", method, target, key);
+  Reflect.defineMetadata(Metadata.path, path, target, key);
+  Reflect.defineMetadata(Metadata.method, method, target, key);
 };
 
 export const get = routeBinder(Methods.get);

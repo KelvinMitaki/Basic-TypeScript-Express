@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { AppRouter } from "../../AppRouter";
+import { Metadata } from "./Metadata";
 import { Methods } from "./Methods";
 
 export const controller = (routePrefix: string) => (target: Function) => {
   const router = AppRouter.getInstance();
   for (let key in target.prototype) {
     const routeHandler = target.prototype[key];
-    const path = Reflect.getMetadata("path", target.prototype, key);
+    const path = Reflect.getMetadata(Metadata.path, target.prototype, key);
     const method: Methods = Reflect.getMetadata(
-      "method",
+      Metadata.method,
       target.prototype,
       key
     );
