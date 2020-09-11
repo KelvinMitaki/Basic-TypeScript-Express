@@ -13,6 +13,11 @@ export const controller = (routePrefix: string) => (target: Function) => {
       target.prototype,
       key
     );
-    router[method](`${routePrefix}${path}`, routeHandler);
+    const middlewares = Reflect.getMetadata(
+      Metadata.middleware,
+      target.prototype,
+      key
+    );
+    router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
   }
 };
