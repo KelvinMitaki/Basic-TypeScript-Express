@@ -37,15 +37,6 @@ route.get("/", (req: Request, res: Response): void => {
     `);
 });
 
-route.get("/logout", (req: Request, res: Response): void => {
-  if (!req.session || (req.session && !req.session.isLoggedIn)) {
-    res.redirect("/");
-    return;
-  }
-  req.session = null;
-  res.redirect("/");
-});
-
 route.get("/protected", auth, (req: Request, res: Response): void => {
   res.send(`
 <div>

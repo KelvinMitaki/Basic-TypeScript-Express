@@ -33,4 +33,13 @@ export class LoginController {
     }
     res.send("invalid email or password");
   }
+  @get("/logout")
+  getLogout(req: Request, res: Response): void {
+    if (!req.session || (req.session && !req.session.isLoggedIn)) {
+      res.redirect("/");
+      return;
+    }
+    req.session = null;
+    res.redirect("/");
+  }
 }
