@@ -1,5 +1,4 @@
 import express from "express";
-import route from "./routes/loginRoutes";
 import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 import "./controllers/LoginController";
